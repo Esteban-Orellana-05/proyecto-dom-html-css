@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Object Model (DOM)</title>
+    <link rel="stylesheet" href="estilo.css">
+</head>
+
+<>
+    <header class="hero">
+        <div class="hero__prompt">
+            <span class="hero__dot hero__dot--red"></span>
+            <span class="hero__dot hero__dot--yellow"></span>
+            <span class="hero__dot hero__dot--green"></span>
+            <span class="hero__prompt-title">terminal — document</span>
+        </div>
+        <div class="hero__body">
+            <p class="hero__line"><span class="hero__caret">&gt;</span> <span id="typed"></span><span
+                    class="hero__cursor">▌</span></p>
+            <h1 <span class="accent">Document Object Model</span></h1>
+            <p class="hero__subtitle">Cómo el navegador convierte una página HTML en un árbol de objetos que se puede
+                leer y modificar.</p>
+        </div>
+    </header>
+
+    <div class="layout">
+        <nav class="sidebar" aria-label="Navegación de secciones">
+            <p class="sidebar__title">// índice</p>
+            <ul>
+                <li><a href="#definicion">01 · definicion.js</a></li>
+                <li><a href="#caracteristicas">02 · caracteristicas.js</a></li>
+                <li><a href="#arbol">03 · arbol-dom.js</a></li>
+                <li><a href="#acceso">04 · acceso-elementos.js</a></li>
+                <li><a href="#cambio">05 · cambio-elementos.js</a></li>
+                <li><a href="#objetivos">06 · objetivos.js</a></li>
+                <li><a href="#fuente">07 · fuente.js</a></li>
+            </ul>
+        </nav>
+
+        <main class="content">
+
+            <section id="definicion" class="card">
+                <div class="card__tab"><span class="card__dot"></span>definicion.js</div>
+                <h2>Definición del DOM</h2>
+                <p>El <strong>objeto <code>document</code></strong> es el objeto principal con el que trabajamos del
+                    lado del cliente. Es la puerta de entrada del navegador hacia la página: a través de él obtenemos
+                    propiedades y métodos que permiten leer y manipular todo lo que compone la ventana, tanto el
+                    contenido visible del cuerpo de la página como los datos de la cabecera.</p>
+                <p>En otras palabras, el DOM es la representación en forma de objetos de un documento HTML, y ese objeto
+                    <code>document</code> es el punto de partida para acceder a cualquier elemento de esa
+                    representación.
+                </p>
+            </section>
+
+            <section id="caracteristicas" class="card">
+                <div class="card__tab"><span class="card__dot"></span>caracteristicas.js</div>
+                <h2>Características principales</h2>
+                <p>La utilidad del objeto <code>document</code> está en la enorme cantidad de referencias que ofrece
+                    hacia elementos de la página, tanto del cuerpo como de la cabecera. Algunas de sus propiedades más
+                    usadas son:</p>
+                <ul class="prop-list">
+                    <li><code>document.body</code> — devuelve el elemento <code>&lt;body&gt;</code> del documento.</li>
+                    <li><code>document.title</code> — devuelve el título de la página.</li>
+                    <li><code>document.images</code> — un array donde cada índice es una imagen de la página.</li>
+                    <li><code>document.bgcolor</code> — obtiene o define el color de fondo (nombre en inglés o valor
+                        hexadecimal).</li>
+                </ul>
+                <p>También ofrece métodos para actuar sobre el documento:</p>
+                <ul class="prop-list">
+                    <li><code>open()</code> — abre el documento.</li>
+                    <li><code>close()</code> — cierra el documento.</li>
+                    <li><code>write()</code> / <code>writeln()</code> — escribe expresiones HTML directamente en la
+                        página.</li>
+                </ul>
+            </section>
+
+            <section id="arbol" class="card">
+                <div class="card__tab"><span class="card__dot"></span>arbol-dom.js</div>
+                <h2>El árbol del DOM</h2>
+                <p>El objeto <code>document</code> está formado por un conjunto de nodos, y para acceder a un elemento
+                    concreto hay que entender esa jerarquía. Los dos tipos principales de nodo son:</p>
+                <ul class="prop-list">
+                    <li><code>Element</code> — los nodos definidos por etiquetas HTML, como <code>body</code>,
+                        <code>div</code> o <code>h1</code>.
+                    </li>
+                    <li><code>Text</code> — el texto contenido dentro de un nodo elemento, considerado como su nodo
+                        hijo.</li>
+                </ul>
+                <p>Cuando se recorre el árbol se habla de <strong>padre</strong> al referirse a un nodo superior, e
+                    <strong>hijo</strong> al referirse a uno inferior; los nodos que comparten un mismo padre son
+                    <strong>hermanos</strong> entre sí. El DOM ofrece propiedades para moverse por esa estructura:
+                </p>
+                <ul class="prop-list">
+                    <li><code>parentNode</code> — nodo padre.</li>
+                    <li><code>childNodes</code> — array con los nodos hijos.</li>
+                    <li><code>firstChild</code> / <code>lastChild</code> — primer y último nodo hijo.</li>
+                    <li><code>previousSibling</code> / <code>nextSibling</code> — nodo hermano anterior y siguiente.
+                    </li>
+                </ul>
+                <pre class="code-block"><code><span class="tok-tag">&lt;ul&gt;</span>
+  <span class="tok-tag">&lt;li</span> <span class="tok-attr">id</span>=<span class="tok-str">"miLI"</span><span class="tok-tag">&gt;</span>Coffee<span class="tok-tag">&lt;/li&gt;</span>
+  <span class="tok-tag">&lt;li&gt;</span>Tea<span class="tok-tag">&lt;/li&gt;</span>
+<span class="tok-tag">&lt;/ul&gt;</span>
+
+<span class="tok-kw">var</span> x = document.<span class="tok-fn">getElementById</span>(<span class="tok-str">"miLI"</span>).parentNode.nodeName;
+<span class="tok-com">// x tendrá el valor "UL", el padre del nodo li</span></code></pre>
+            </section>
+
+            <section id="acceso" class="card">
+                <div class="card__tab"><span class="card__dot"></span>acceso-elementos.js</div>
+                <h2>Acceso a los elementos HTML</h2>
+                <p>Para llegar a un elemento concreto del árbol, el objeto <code>document</code> ofrece tres métodos
+                    principales:</p>
+                <ul class="prop-list">
+                    <li><code>getElementById()</code> — accede a un elemento por su atributo <code>id</code>. Como no
+                        puede repetirse un mismo <code>id</code> en el HTML, es la forma más directa y frecuente de
+                        llegar a un nodo concreto.</li>
+                    <li><code>getElementsByTagName()</code> — devuelve, como un array, todos los elementos que
+                        coinciden con la etiqueta indicada, en el mismo orden en que aparecen en el código.</li>
+                    <li><code>getElementsByName()</code> — devuelve los elementos que tienen un atributo
+                        <code>name</code> específico, también en el orden del código.
+                    </li>
+                </ul>
+            </section>
+
+            <section id="cambio" class="card">
+                <div class="card__tab"><span class="card__dot"></span>cambio-elementos.js</div>
+                <h2>Cambio de los elementos</h2>
+                <p>Una vez localizado un nodo, el DOM permite modificarlo. Dos formas comunes de hacerlo son:</p>
+                <ul class="prop-list">
+                    <li><code>innerHTML</code> — reemplaza el contenido HTML interno de un elemento.</li>
+                    <li><code>setAttribute(atributo, valor)</code> — cambia el valor de un atributo del elemento
+                        HTML.</li>
+                </ul>
+                <p class="demo-hint">Pruébalo tú mismo — este botón usa
+                    <code>document.getElementById("demo").innerHTML</code>:
+                </p>
+                <div class="demo-box">
+                    <button id="demoBtn" class="demo-btn">Pulsame</button>
+                    <p id="demo" class="demo-output">// el resultado aparecerá aquí</p>
+                </div>
+            </section>
+
+            <section id="objetivos" class="card">
+                <div class="card__tab"><span class="card__dot"></span>objetivos.js</div>
+                <h2>Objetivos y utilidad dentro del desarrollo web</h2>
+                <p>El DOM existe para que un lenguaje como JavaScript pueda comunicarse con el HTML después de que la
+                    página ya fue cargada. Su objetivo principal es representar el documento como una estructura de
+                    objetos manipulable, de modo que se pueda leer, añadir, eliminar o modificar contenido y estilos
+                    sin necesidad de recargar la página.</p>
+                <p>Esto es lo que hace posible la interactividad en la web moderna: formularios que validan en tiempo
+                    real, menús que se despliegan, contenido que cambia según lo que hace el usuario. Entender el DOM
+                    es la base para trabajar con cualquier framework o librería de JavaScript, porque todos, en algún
+                    punto, terminan apoyándose en estas mismas propiedades y métodos.</p>
+            </section>
+
+            <section id="fuente" class="card card--source">
+                <div class="card__tab"><span class="card__dot"></span>fuente.js</div>
+                <h2>Fuente</h2>
+                <p>Contenido elaborado a partir de: Escarcena, M. <em>Programación de Páginas Web con JavaScript y
+                        PHP</em>, páginas 40–44.</p>
+            </section>
+
+        </main>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2026 · Proyecto informativo sobre el DOM · HTML5 + CSS</p>
+        <p><a href="https://github.com/Esteban-Orellana-05/proyecto-dom-html-css" class="footer__link">Ver en GitHub</a>
+        </p>
+    </footer>
+
+    <script>
+        function funcion() {
+            document.getElementById("demo").innerHTML = "Hola Mundo — este texto cambió con innerHTML";
+        }
+        document.getElementById("demoBtn").addEventListener("click", funcion);
+    </script>
+
+    </body>
+
+</html>
